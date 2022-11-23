@@ -1,0 +1,1000 @@
+:root {
+	--g1: #8d8792;
+	--g2: #857f8b;
+}
+
+* {
+	transform-style: preserve-3d;
+	box-sizing: border-box;
+}
+
+input {
+	display: none;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	perspective: 100vmin;
+	background: radial-gradient(circle at 50% 35%, #22546c, #04070a);
+	font-family: Arial, Helvetica, serif;
+}
+/*
+body:active .content {
+transform: scale3d(1.25,1.25,1.25);
+transition: all 1s ease 1s;
+}
+*/
+.content {
+	width: 50vmin;
+	height: 50vmin;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform: rotateY(0deg) rotateX(0deg);
+	/*transform: rotateY(0deg) rotateX(0deg) scale3d(2.5, 2.5, 2.5) translate3d(-10vmin, -15vmin, -10vmin);*/
+	transition: all 1s ease 0s;
+	margin-top: -5vmin;	
+}
+
+.cuboid {
+	--height: 10;
+	--width: 10;
+	--depth: 10;
+	--hue: 275;
+	--sat: 5%;
+	height: calc(var(--height) * 1vmin);
+	width: calc(var(--width) * 1vmin);
+	position: absolute;
+	animation: cube1 0.6s linear 0s infinite;
+	transform: translate3d(0vmin, 0vmin, -5vmin);
+}
+
+.cuboid .side {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 100%;
+	width: 100%;
+	border-radius: 2px;
+}
+
+.cuboid .side:nth-of-type(1) {
+	transform: translate3d(-50%, -50%, calc(var(--depth) * 0.5vmin));
+	background: hsl(var(--hue), var(--sat), 65%);
+}
+.cuboid .side:nth-of-type(2) {
+	transform: translate3d(-50%, -50%, calc(var(--depth) * -0.5vmin))
+		rotateY(180deg);
+	background: hsl(var(--hue), var(--sat), 30%);
+}
+.cuboid .side:nth-of-type(3) {
+	width: calc(var(--depth) * 1vmin);
+	transform: translate(-50%, -50%) rotateY(90deg)
+		translate3d(0, 0, calc(var(--width) * 0.5vmin));
+	background: hsl(var(--hue), var(--sat), 80%);
+}
+.cuboid .side:nth-of-type(4) {
+	width: calc(var(--depth) * 1vmin);
+	transform: translate(-50%, -50%) rotateY(-90deg)
+		translate3d(0, 0, calc(var(--width) * 0.5vmin));
+	background: hsl(var(--hue), var(--sat), 40%);
+}
+.cuboid .side:nth-of-type(5) {
+	height: calc(var(--depth) * 1vmin);
+	transform: translate(-50%, -50%) rotateX(90deg)
+		translate3d(0, 0, calc(var(--height) * 0.5vmin));
+	background: hsl(var(--hue), var(--sat), 55%);
+}
+.cuboid .side:nth-of-type(6) {
+	height: calc(var(--depth) * 1vmin);
+	transform: translate(-50%, -50%) rotateX(-90deg)
+		translate3d(0, 0, calc(var(--height) * 0.5vmin));
+	background: hsl(var(--hue), var(--sat), 20%);
+}
+
+
+
+/*** MONITOR ***/
+
+.cuboid.monitor {
+	--width: 40;
+	--height: 34;
+	--depth: 30;
+	transform: translate3d(0vmin, -9vmin, 0vmin);
+}
+.cuboid.monitor .side {
+	border-radius: 4px;
+}
+.cuboid.monitor .side:nth-child(1) {
+	background: #fff0;
+	box-shadow: 0 0 0 5vmin #a6a1aa inset;
+}
+
+
+
+.cuboid.button {
+	--width: 2.5;
+	--height: 2.5;
+	--depth: 1;
+	transform: translate3d(0vmin, 5.5vmin, 15.25vmin);
+}
+
+.cuboid.button .side {
+	border: 1px solid #0002;
+	box-shadow: 0 0 1vmin 0 #8d8d8d88 inset;
+}
+
+#monitor:checked ~ .button {
+	transform: translate3d(0vmin, 5.5vmin, 14.75vmin);	
+}
+
+label[for=monitor] {
+	position: absolute;
+	width: 2.5vmin;
+	height: 2.5vmin;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+}
+label[for=monitor]:before {
+	--on: #183b1a;
+	--bd: #fff6;
+	content: "";
+	position: absolute;
+	width: 1.25vmin;
+	height: 1.25vmin;
+	background: radial-gradient(circle at 50% 50%, var(--on) 0 0.1vmin, var(--bd) calc(0.1vmin + 1px) calc(0.1vmin + 1px), #fff0 0 100%);
+	left: 0.5vmin;
+	top: 0.65vmin;
+	border: 1px solid #3336;
+	border-top-color: #fff0;
+	border-radius: 100%;
+	box-sizing: border-box;
+}
+label[for=monitor]:after {
+	content: "";
+	position: absolute;
+	width: 1px;
+	height: 4px;
+	background: #3336;
+	left: calc(1vmin + 1px);
+	top: 0.5vmin;
+}
+
+#monitor:checked ~ .cuboid.button .side label[for=monitor]:before {
+	--on: #54ff5b;
+	--bd: #3d9541;	
+}
+
+/*** Windows 95 background images from Wikipedia: ***/
+/*** https://en.wikipedia.org/wiki/Windows_95 ***/
+
+#monitor:checked ~ .cuboid.screen .side:nth-of-type(2) {
+	filter: brightness(1.5);
+	background-image: url(https://upload.wikimedia.org/wikipedia/commons/8/83/Microsoft_Windows_95_Version_4.00.1111_command.com_MS-DOS_Prompt_492x259.png), url(https://upload.wikimedia.org/wikipedia/en/e/eb/Windows_95_at_first_run.png);
+	background-size: 75% 55%, 100% 100%;
+	background-position: 90% 80%, center center;
+	background-repeat: no-repeat;
+	background-color: #000;
+	transition: background-image 0s ease 0s;
+	animation: w2ms2 2s ease 0.5s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes w2ms2 {
+	0% { background-image: url(), url(https://upload.wikimedia.org/wikipedia/en/e/eb/Windows_95_at_first_run.png); }
+	33% { background-image: url(), url(https://upload.wikimedia.org/wikipedia/en/e/eb/Windows_95_at_first_run.png); }
+	75% { background-image: url(), url(https://upload.wikimedia.org/wikipedia/en/e/eb/Windows_95_at_first_run.png); }
+	75% { background-image: url(https://upload.wikimedia.org/wikipedia/commons/8/83/Microsoft_Windows_95_Version_4.00.1111_command.com_MS-DOS_Prompt_492x259.png), url(https://upload.wikimedia.org/wikipedia/en/e/eb/Windows_95_at_first_run.png); }
+	100% { background-image: url(https://upload.wikimedia.org/wikipedia/commons/8/83/Microsoft_Windows_95_Version_4.00.1111_command.com_MS-DOS_Prompt_492x259.png), url(https://upload.wikimedia.org/wikipedia/en/e/eb/Windows_95_at_first_run.png); }
+}
+
+
+
+.cuboid.screen {
+	--width: 30;
+	--height: 24;
+	--depth: 1;
+	transform: translate3d(0vmin, -9vmin, 14.5vmin);
+}
+.cuboid.screen .side:nth-child(1) {
+	border-radius: 4px;
+	background: linear-gradient(45deg, #0008, #fff2 56% 64%, #0008 );
+}
+.cuboid.screen .side:nth-of-type(2) {
+	transform: translate3d(-50%, -50%, calc(var(--depth) * -0.5vmin)) rotateY(0deg);
+	background-size: 100%;
+	border: 1vmin solid #010101;
+	filter: brightness(0.25);
+}
+
+
+
+.cuboid.glass {
+	--width: 30;
+	--height: 24;
+	--depth: 1;
+	transform: translate3d(0vmin, -9vmin, 15.125vmin);
+}
+.cuboid.glass .side {
+	border-radius: 3px;
+	background: linear-gradient(45deg, #fff0 55%, #fff1 56% 64%, #fff0 65% 66%, #fff2 67% 69%, #fff0 71% 100% ), linear-gradient(45deg, #2196f380, #ffffff78 56% 64%, #2196f380);
+	opacity: 0.4;
+}
+.cuboid.glass .side:nth-child(2) {
+	background: #fff0;
+}
+
+
+
+.cuboid.base {
+	--width: 25;
+	--height: 1;
+	--depth: 25;
+	transform: translate3d(0vmin, 8.5vmin, 0vmin);
+}
+.cuboid.base.bot {
+	--width: 30;
+	--depth: 30;
+	transform: translate3d(0vmin, 14vmin, 0vmin);
+}
+.cuboid.base.mid {
+	--width: 10;
+	--height: 5;
+	--depth: 10;
+	transform: translate3d(0vmin, 11vmin, 0vmin);
+}
+
+
+
+.column {
+	width: 20vmin;
+	height: 21vmin;
+	transform: rotateX(90deg) translate3d(0, 0vmin, -13.45vmin);
+	background: var(--g2);
+	border-radius: 100%;
+	box-shadow: 0 0 0.8vmin 0.5vmin #565656;
+}
+.column div {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: var(--g2) ;
+	border-radius: 100%;
+	transform: translateZ(0.75vmin);
+	box-shadow: 0 0 5px 0 var(--g2) ;
+}
+.column div:before, .column div:after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: var(--g1) ;
+	border-radius: 100%;
+	transform: translateZ(-0.35vmin);
+	box-shadow: 0 0 2px 0 var(--g1) ;
+}
+.column div:after {
+	transform: translateZ(0.35vmin);
+}
+.column div:nth-child(2) {
+	transform: translateZ(1.5vmin);
+}
+.column div:nth-child(3) {
+	transform: translateZ(2.25vmin);
+}
+.column div:nth-child(4) {
+	transform: translateZ(3vmin);
+}
+.column div:nth-child(5) {
+	transform: translateZ(3.75vmin);
+}
+.column div:nth-child(6) {
+	transform: translateZ(4.45vmin);
+}
+
+
+
+
+/*** PC ***/
+
+.cuboid.pc {
+	--width: 46;
+	--height: 11;
+	--depth: 40;
+	transform: translate3d(0vmin, 20vmin, 0vmin);
+}
+.cuboid.pc .side:nth-child(1) {
+	background: #fff0;
+	box-shadow: 30vmin 0vmin 0 1.5vmin #a6a1aa inset, 0vmin 0vmin 0 1.5vmin #a6a1aa inset;
+}
+.cuboid.pc .side:nth-child(1):before, .cuboid.pc .side:nth-child(1):after {
+	content: "";
+	position: absolute;
+	width: 66.5%;
+	height: 40%;
+	top: 52%;
+	left: 1%;
+	background: repeating-linear-gradient(180deg, #fff 1px, #fff0 2px 1vmin, #333 calc(1vmin + 1px) calc(1vmin + 2px), #fff0 0 calc(1vmin + 5px));
+	background-position-y: -1vmin;
+}
+.cuboid.pc .side:nth-child(1):after {
+	width: 1.5%;
+	left: 97.5%;
+}
+
+
+
+/*** PC BUTTON ***/
+.cuboid.pc .side:nth-child(2):after {
+	content: "";
+	position: absolute;
+	width: 1.75vmin;
+	height: 1.75vmin;
+	top: 2vmin;
+	left: 0;
+	border-radius: 100%;
+	transform: translate3d(42vmin, 0vmin, -40vmin) rotateY(180deg);
+	background: conic-gradient(from 0deg at 49% 100%, #ffc107 0 25%, #fff0 0 100%), linear-gradient(145deg, #b2acb6, #959199);
+	background-size: 0.25vmin 0.5vmin, 100% 100%;
+	background-repeat: no-repeat;
+	background-position: 50% 30%, 100% 100%;
+	box-shadow: 1px 1px 2px #858188, -1px -1px 3px #c7c1cc;
+	border: 1px solid #3336;
+	content: "ix486";
+	text-indent: 2.5vmin;
+	content: "ix486DX";
+	font-size: 0.9vmin;
+	color: #747474;
+	line-height: 1.75vmin;
+}
+.cuboid.pc .side:nth-child(2):before {
+	content: "";
+	position: absolute;
+	width: 0.85vmin;
+	height: 0.85vmin;
+	background: #fff0;
+	top: 2.6vmin;
+	border: 1px solid #ffc107;
+	transform: translate3d(42.55vmin, 0vmin, -40vmin);
+	border-top-color: #fff0;
+	border-radius: 100%;
+	box-sizing: border-box;
+	z-index: 2;
+	filter:  drop-shadow(0 0 1px #FF9800) drop-shadow(0 0 2px #FF9800);
+}
+
+
+
+/*** PC SIDE ***/
+.cuboid.pc .side:nth-of-type(3):before, .cuboid.pc .side:nth-of-type(4):before {
+	content: "";
+	position: absolute;
+	right: 1.25vmin;
+	top: 1vmin;
+	width: 15vmin;
+	height: 9vmin;
+	background: repeating-radial-gradient(#0008 0 20%, #fff0 25% 100%);
+	background-repeat: repeat;
+	background-size: 1.15vmin 1.15vmin;
+	filter: drop-shadow(-1px 1px 1px #000);
+}
+.cuboid.pc .side:nth-of-type(4):before {
+	right: inherit;
+	left: 1.25vmin;
+}
+
+
+
+
+/*** PC DISKETTE ***/
+.cuboid.diskette-hole {
+	--width: 13;
+	--height: 8;
+	--depth: 10;
+	transform: translate3d(15vmin, 20vmin, 15.025vmin);
+}
+
+.cuboid.diskette-hole .side {
+	filter: brightness(0.85);
+}
+
+.cuboid.diskette-hole .side:nth-child(1) {
+	opacity: 0;
+}
+
+
+
+.cuboid.diskette-box {
+	--width: 12.8;
+	--height: 3.85;
+	--depth: 10;
+	transform: translate3d(14.95vmin, 18.025vmin, 15.05vmin);
+}
+.cuboid.diskette-box + .diskette-box {
+	transform: translate3d(14.95vmin, 21.95vmin, 15.05vmin);
+}
+.cuboid.diskette-box .side:nth-of-type(1) {
+	clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%, 96% 100%, 96% 55%, 96% 45%, 56% 45%, 56% 15%, 44% 15%, 44% 45%, 6% 45%, 6% 55%, 44% 55%, 44% 85%, 56% 85%, 56% 55%, 96% 55%, 96% 100%);
+
+}
+.cuboid.diskette-box + .diskette-box .side:nth-of-type(1) {
+	clip-path: polygon(0% 0%, 0% 100%, 18% 100%, 18% 25%, 82% 25%, 82% 75%, 18% 75%, 18% 100%, 100% 100%, 100% 0%);
+}
+
+
+
+
+/*** FLOPPY DISK 5 ***/
+.cuboid.floppy-5 {
+	--width: 11.5;
+	--height: 0.5;
+	--depth: 10;
+	transform: translate3d(15vmin, 18vmin, 15.025vmin);
+}
+.cuboid.floppy-5 .side {
+	filter: brightness(0.15) contrast(0.8);
+}
+.cuboid.floppy-5 .side:nth-child(1) {
+	opacity: 0;
+}
+.cuboid.floppy-5 .side:nth-of-type(5) {
+	background: linear-gradient(0deg, #fff0 10%, #111 10%), linear-gradient(90deg, #111 42%, #fff0 42% 58%, #111 58%);
+}
+.cuboid.floppy-5 .side:nth-of-type(6) {
+	background: linear-gradient(180deg, #fff0 10%, #111 10%), linear-gradient(90deg, #111 42%, #fff0 42% 58%, #111 58%);
+}
+
+.cuboid.floppy-5-hole {
+	--width: 1.5;
+	--height: 2.75;
+	--depth: 1;
+	transform: translate3d(14.975vmin, 18vmin, 19.55vmin);
+}
+.cuboid.floppy-5-hole .side {
+	border-radius: 1px;
+}
+.cuboid.floppy-5-hole .side:nth-child(1) {
+	opacity: 0;
+}
+.cuboid.floppy-5-hole .side:nth-child(2) {
+	background: linear-gradient(0deg, #a6a1aa 40%, #fff0 40% 60% , #a6a1aa 60%);
+}
+.cuboid.floppy-5-hole .side:nth-child(3) {
+	background: linear-gradient(0deg, #67616b 40%, #fff0 40% 60% , #67616b 60%);
+}
+.cuboid.floppy-5-hole .side:nth-child(4) {
+	background: linear-gradient(0deg, #ccc9cf 40%, #fff0 40% 60% , #67616b 60%);
+}
+.cuboid.floppy-5-hole .side:nth-child(5) {
+	background: #333036;;
+}
+.cuboid.floppy-5-hole .side:nth-child(6) {
+	background: #8d8792;;
+}
+
+.cuboid.diskette-hole + .cuboid.diskette-box .side:nth-of-type(1) {
+	background: radial-gradient(circle at 80% 25%, #183b1a 0.15vmin, #b1b1b1 0.2vmin, #a6a1aa 0.25vmin);
+}
+
+.cuboid.floppy-5-bar {
+	--width: 2;
+	--height: 0.5;
+	--depth: 0.5;
+	transform: translate3d(11.5vmin, 17vmin, 20.3vmin) rotateZ(5deg);
+	transform-origin: left center;
+}
+.cuboid.floppy-5-bar .side:nth-of-type(1) {
+	border: 1px solid #0002;
+}
+.cuboid.floppy-5-bar .side:nth-child(1):before {
+	content: "";
+	position: absolute;
+	width: 0.225vmin;
+	height: 0.225vmin;
+	background: #333;
+	border-radius: 100%;
+	left: 0.2vmin;
+	top: 0.125vmin;
+}
+
+
+
+/*** FLOPPY DISK 3 ***/
+.cuboid.floppy-3 {
+	--width: 8.2;
+	--height: 2;
+	--depth: 10;
+	transform: translate3d(15vmin, 22vmin, 15.125vmin);
+}
+.cuboid.floppy-3 .side {
+	filter: brightness(0.15) contrast(0.8);
+}
+.cuboid.floppy-3 .side:nth-child(1) {
+	background: conic-gradient(from 90deg at 0% 0%, #a29ea5 0 25%, #fff0 0 100%), conic-gradient(from 90deg at 0% 0%, #857f8b 0 100%), #9b969f;
+	filter: none;
+	border: 1px solid #0002;
+	background-repeat: no-repeat;
+	background-size: 7.4vmin 0.45vmin, 7.6vmin 0.65vmin;
+	background-position: 0.25vmin 0.35vmin, 0.2vmin 0.25vmin;
+}
+.cuboid.floppy-3 .side:nth-child(1):before {
+	content: "";
+	position: absolute;
+	width: 0.4vmin;
+	height: 0.2vmin;
+	top: 1.3vmin;
+	left: 1.5vmin;
+	background: #183b1a;
+	border-radius: 0px;
+	box-shadow: 0 0 2px 1px #b1b1b1;
+	transition: all 0s ease 0s;
+}
+
+#floppydisk:checked ~ .cuboid.floppy-3 .side:nth-child(1):before {
+	transition: all 0s ease 3s;
+	background: green;
+	box-shadow: 0 0 2px 1px #8bc34a;
+}
+
+.cuboid.floppy-3-button {
+	--width: 1.4;
+	--height: 0.4;
+	--depth: 0.5;
+	transform: translate3d(17vmin, 22.4vmin, 20.25vmin);
+}
+.cuboid.floppy-3-button .side {
+	border-radius: 1px;
+}
+
+.cuboid.floppy-3-disc {
+	--width: 7.4;
+	--height: 0.25;
+	--depth: 7.5;
+	transform: translate3d(0vmin, 21.65vmin, 21vmin) rotateX(-82deg); /*15*/
+	transform-origin: center bottom;
+
+	animation: diskette-out 2s ease 0s reverse 0;
+}
+.cuboid.floppy-3-disc .side {
+	background: #323232;
+	border-radius: 1px;
+}
+.cuboid.floppy-3-disc .side:nth-of-type(2) {
+	clip-path: polygon(8% 0, 100% 0, 100% 100%, 8% 100%);
+}
+.cuboid.floppy-3-disc .side:nth-of-type(3) {
+	clip-path: polygon(0 0, 92% 0, 92% 100%, 0 100%);
+}
+.cuboid.floppy-3-disc .side:nth-child(5) {
+	clip-path: polygon(92% 0%, 100% 8%, 100% 100%, 0% 100%, 0% 0%);
+}
+.cuboid.floppy-3-disc .side:nth-child(6) {
+	clip-path: polygon(100% 92%, 92% 100%, 0% 100%, 1% 0%, 100% 0%);
+}
+
+.cuboid.floppy-3-disc .side:nth-child(5):before {
+	content: "";
+	position: absolute;
+	background: linear-gradient(180deg, #607d8b 1vmin, #fff0 1.1vmin 100%), repeating-linear-gradient(180deg, #607d8b 2px, #fff0 3px 1vmin), #fff;
+	width: 6vmin;
+	height: 4vmin;
+	box-shadow: 0 0 0 0px #fff;
+	bottom: 0.51vmin;
+	left: calc(50% - 3vmin);
+	border-radius: 0.35vmin;
+	content: "LEMMINGS";
+	font-size: 0.85vmin;
+	text-align: center;
+	padding-top: 1.65vmin;
+	box-sizing: border-box;
+}
+.cuboid.floppy-3-disc .side:nth-child(5):after {
+	content: "";
+	position: absolute;
+	background: conic-gradient(from 0deg at 0 100%, #343434 0 25%, #fff0 0 100%), #fff;
+	width: 4vmin;
+	background-repeat: no-repeat;
+	height: 2.5vmin;
+	box-shadow: 0 0 0 0px #fff;
+	top: 0;
+	left: calc(50% - 2vmin);
+	border-radius: 1px;
+	background-size: 1.1vmin 2vmin;
+	background-position: 2vmin 0.25vmin;
+	z-index: -1;
+}
+
+#floppydisk:checked ~ .cuboid.floppy-3 .side:nth-child(1):hover:after {
+	content: "";
+	position: absolute;
+	background: red;
+	width: 0.35vmin;
+	height: 0.25vmin;
+	top: 1.3vmin;
+	left: 1.5vmin;
+	box-shadow: 0 0 0.5vmin 0.1vmin red;
+}
+
+
+
+/*** FLOPPY BUTTONS ***/
+label[for=floppydisk], label[for=removedisk] {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+label[for=removedisk] {
+	transform: translateZ(0.4vmin);
+	cursor: default;
+}
+#floppydisk:checked ~ .cuboid.floppy-3 .side:nth-child(1) label[for=removedisk] {
+	cursor: pointer;
+}
+#floppydisk:checked ~ .cuboid.floppy-3-disc {
+	animation: diskette-in 2s ease 0s;
+	animation-fill-mode: forwards;
+	transform-origin: center bottom;
+}
+#removedisk:checked ~ .cuboid.floppy-3-disc {
+	animation: diskette-out 2s ease 0s reverse;
+	animation-fill-mode: backwards;
+	transform-origin: center bottom;
+}
+@keyframes diskette-in {
+	0% { transform: translate3d(0vmin, 21.65vmin, 21.125vmin) rotateX(-82deg); }
+	50% { transform: translate3d(15vmin, 21.65vmin, 25.125vmin) rotateX(0deg);}
+	100% { transform: translate3d(15vmin, 21.65vmin, 16.5vmin) rotateX(0deg);}
+}
+@keyframes diskette-out {
+	0% { transform: translate3d(0vmin, 21.65vmin, 21.125vmin) rotateX(-82deg); }
+	50% { transform: translate3d(15vmin, 21.65vmin, 25.125vmin) rotateX(0deg);}
+	100% { transform: translate3d(15vmin, 21.65vmin, 17.05vmin) rotateX(0deg);}
+}
+
+
+
+/*** LEMMINGS RUNNING ***/
+#monitor:checked + #floppydisk:checked ~ .cuboid.screen .side:nth-of-type(2) {
+	animation: lemmings 0s ease 2s;
+	animation-fill-mode: forwards;
+	transition: background-image 0s ease 0s;
+}
+
+/*** Lemmings gif animation from: ***/
+/*** https://kkatlas.wordpress.com/2015/08/31/game-review-lemmings/ ***/
+
+@keyframes lemmings {
+	100% {
+		filter: brightness(1.5);
+		background-image: url(https://josetxu.com/demos/gif/lemmings.gif);
+		background-size: 100%;
+		background-position: center;
+	}
+}
+
+
+
+/*** PC ROTATION ***/
+.rotate {
+	--dir: 90deg;
+	background: linear-gradient(var(--dir), #0a1d26, transparent);
+	position: absolute;
+	width: 20vmin;
+	height: 100%;
+	left: 0;
+}
+.rotate.right {
+	right: 0;
+	left: inherit;
+	--dir: -90deg;
+}
+.rotate:before {
+	--arw: #fff;
+	content: "";
+	position: absolute;
+	width: 3vmin;
+	height: 3vmin;
+	border: 1vmin solid #fff0;
+	border-bottom-color: var(--arw);
+	border-right-color: var(--arw);
+	left: 80%;
+	border-radius: 100%;
+	top: calc(50% - 1.5vmin);
+	transform: rotate(0deg);
+	transition: all 1s ease 0s;
+	color: var(--arw);
+	content: "\25E4";
+	font-size: 3vmin;
+	text-indent: -1.125vmin;
+	line-height: 6vmin;
+	opacity: 0.25;
+}
+.rotate.right:before {
+	transform: rotateY(180deg);
+	left: 20%;
+}
+.rotate:hover ~.content {
+	transform: rotateY(-40deg) rotateX(0deg);
+}
+.rotate.right:hover ~.content {
+	transform: rotateY(40deg) rotateX(0deg);
+}
+.rotate:hover:before {
+	transform: rotate(90deg);
+	opacity: 0.75;
+}
+.rotate.right:hover:before {
+	transform: rotateY(180deg) rotate(90deg);
+}
+
+
+
+/*** MOUSE ***/
+/*** Cable ***/
+.cable {
+	position: absolute;
+	right: 0vmin;
+	width: 0.35vmin;
+	height: 50vmin;
+	background: #a6a1aa;
+	transform: rotateX(90deg) translate3d(0, 5vmin, -25.225vmin);
+	box-shadow: 0 0 0.25vmin 0 #000 inset;
+}
+
+.cable:before,
+.cable:after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #a6a1aa;
+	transform: rotateY(60deg);
+	box-shadow: 0 0 0.25vmin 0 #000 inset;
+}
+
+.cable:after {
+	background: #a6a1aa;
+	transform: rotateY(-60deg);
+}
+
+.cable + .cable {
+	transform: rotateX(90deg) translate3d(-5vmin, -20vmin, -25.225vmin) rotateZ(90deg);
+	height: 10vmin;
+}
+
+
+/*** Mouse ***/
+.cuboid.mouse {
+	transform: translate3d(24.5vmin, 25vmin, 30vmin);
+	--height: 1;
+	--width: 3.5;
+	--depth: 6;
+}
+.cuboid.mouse-btn {
+	--width: 1.5;
+	--height: 0.5;
+	--depth: 2;
+	transform: translate3d(23.75vmin, 24.55vmin, 28.25vmin);
+}
+
+.cuboid.mouse-btn + .cuboid.mouse-btn {
+	transform: translate3d(25.35vmin, 24.55vmin, 28.25vmin);
+}
+
+
+
+
+/*** PAUSE ***/
+label[for=paused] {
+	/*background: #ff000052;*/
+	width: 1.5vmin;
+	height: 2vmin;
+	position: absolute;
+	transform: translateZ(0.25vmin);
+	cursor: pointer;
+	top: 0.5vmin;
+	left: 0.25vmin;
+}
+
+#monitor:checked ~ #paused:checked ~ .cuboid.mouse-btn.left {
+	transform: translate3d(23.75vmin, 24.6vmin, 28.5vmin)
+} 
+
+/*** LEMMINGS PAUSED ***/
+#monitor:checked + #floppydisk:checked ~ #paused:checked ~ .cuboid.screen .side:nth-of-type(2):before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-image: url(https://josetxu.com/demos/gif/lemmings.jpg);
+	background-size: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+
+
+
+
+
+
+
+/* .content { transform: rotateY(0deg) rotateX(-26deg) scale3d(2.5, 2.5, 2.5) translate3d(-1vmin, -15vmin, -30vmin) } */
+
+/*** KEYBOARD ***/
+.cuboid.keyboard {
+	--width: 38;
+	--height: 1.5;
+	--depth: 12;
+	transform: translate3d(-1vmin, 25vmin, 32vmin);
+}
+
+.cuboid.key {
+	--width: 1.2;
+	--height: 0.5;
+	--depth: 1.2;
+	transform: translate3d(-18.5vmin, 24.1vmin, 28vmin);
+}
+
+.cuboid.key .side {
+	filter: brightness(1.1);
+	border-radius: 1px;
+}
+
+.cuboid.key:hover {
+	margin-top: 0.055vmin;
+}
+
+.cuboid.key:active {
+	margin-top: 0.65vmin;
+}
+
+.key.k-f1 {transform: translate3d(-16vmin, 24.1vmin, 28vmin);}
+.key.k-f2 {transform: translate3d(-14.5vmin, 24.1vmin, 28vmin);}
+.key.k-f3 {transform: translate3d(-13vmin, 24.1vmin, 28vmin);}
+.key.k-f4 {transform: translate3d(-11.5vmin, 24.1vmin, 28vmin);}
+.key.k-f5 {transform: translate3d(-9vmin, 24.1vmin, 28vmin);}
+.key.k-f6 {transform: translate3d(-7.5vmin, 24.1vmin, 28vmin);}
+.key.k-f7 {transform: translate3d(-6vmin, 24.1vmin, 28vmin);}
+.key.k-f8 {transform: translate3d(-4.5vmin, 24.1vmin, 28vmin);}
+.key.k-f9 {transform: translate3d(-2vmin, 24.1vmin, 28vmin);}
+.key.k-f10 {transform: translate3d(-0.5vmin, 24.1vmin, 28vmin);}
+.key.k-f11 {transform: translate3d(1vmin, 24.1vmin, 28vmin);}
+.key.k-f12 {transform: translate3d(2.5vmin, 24.1vmin, 28vmin);}
+.key.k-ps {transform: translate3d(5.5vmin, 24.1vmin, 28vmin);}
+.key.k-sl {transform: translate3d(7vmin, 24.1vmin, 28vmin);}
+.key.k-pb {transform: translate3d(8.5vmin, 24.1vmin, 28vmin);}
+.key.k-in {transform: translate3d(5.5vmin, 24.1vmin, 30vmin);}
+.key.k-hm {transform: translate3d(7vmin, 24.1vmin, 30vmin);}
+.key.k-pu {transform: translate3d(8.5vmin, 24.1vmin, 30vmin);}
+.key.k-dl {transform: translate3d(5.5vmin, 24.1vmin, 31.5vmin);}
+.key.k-ed {transform: translate3d(7vmin, 24.1vmin, 31.5vmin);}
+.key.k-pd {transform: translate3d(8.5vmin, 24.1vmin, 31.5vmin);}
+.key.k-al {transform: translate3d(5.5vmin, 24.1vmin, 36vmin);}
+.key.k-ad {transform: translate3d(7vmin, 24.1vmin, 36vmin);}
+.key.k-ar {transform: translate3d(8.5vmin, 24.1vmin, 36vmin);}
+.key.k-au {transform: translate3d(7vmin, 24.1vmin, 34.5vmin);}
+.key.k-nl {transform: translate3d(11.5vmin, 24.1vmin, 30vmin);}
+.key.k-sh {transform: translate3d(13vmin, 24.1vmin, 30vmin);}
+.key.k-as {transform: translate3d(14.5vmin, 24.1vmin, 30vmin);}
+.key.k-da {transform: translate3d(16vmin, 24.1vmin, 30vmin);}
+.key.k-9 {transform: translate3d(11.5vmin, 24.1vmin, 31.5vmin);}
+.key.k-8 {transform: translate3d(13vmin, 24.1vmin, 31.5vmin);}
+.key.k-7 {transform: translate3d(14.5vmin, 24.1vmin, 31.5vmin);}
+.key.k-6 {transform: translate3d(11.5vmin, 24.1vmin, 33vmin);}
+.key.k-5 {transform: translate3d(13vmin, 24.1vmin, 33vmin);}
+.key.k-4 {transform: translate3d(14.5vmin, 24.1vmin, 33vmin);}
+.key.k-3 {transform: translate3d(11.5vmin, 24.1vmin, 34.5vmin);}
+.key.k-2 {transform: translate3d(13vmin, 24.1vmin, 34.5vmin);}
+.key.k-1 {transform: translate3d(14.5vmin, 24.1vmin, 34.5vmin);}
+.key.k-0 {transform: translate3d(12.25vmin, 24.1vmin, 36vmin); --width: 2.65;}
+.key.k-d {transform: translate3d(14.5vmin, 24.1vmin, 36vmin);}
+.key.k-pl {transform: translate3d(16vmin, 24.1vmin, 32.25vmin); --depth: 2.65;}
+.key.k-en {transform: translate3d(16vmin, 24.1vmin, 35.25vmin); --depth: 2.65;}
+.key.k-ns {transform: translate3d(-18.5vmin, 24.1vmin, 30vmin);}
+.key.k-n1 {transform: translate3d(-17vmin, 24.1vmin, 30vmin);}
+.key.k-n2 {transform: translate3d(-15.5vmin, 24.1vmin, 30vmin);}
+.key.k-n3 {transform: translate3d(-14vmin, 24.1vmin, 30vmin);}
+.key.k-n4 {transform: translate3d(-12.5vmin, 24.1vmin, 30vmin);}
+.key.k-n5 {transform: translate3d(-11vmin, 24.1vmin, 30vmin);}
+.key.k-n6 {transform: translate3d(-9.5vmin, 24.1vmin, 30vmin);}
+.key.k-n7 {transform: translate3d(-8vmin, 24.1vmin, 30vmin);}
+.key.k-n8 {transform: translate3d(-6.5vmin, 24.1vmin, 30vmin);}
+.key.k-n9 {transform: translate3d(-5vmin, 24.1vmin, 30vmin);}
+.key.k-n0 {transform: translate3d(-3.5vmin, 24.1vmin, 30vmin);}
+.key.k-nm {transform: translate3d(-2vmin, 24.1vmin, 30vmin);}
+.key.k-np {transform: translate3d(-0.5vmin, 24.1vmin, 30vmin);}
+.key.k-bs {transform: translate3d(1.75vmin, 24.1vmin, 30vmin); --width: 2.65;}
+.key.k-tb {transform: translate3d(-18vmin, 24.1vmin, 31.5vmin); --width: 2;}
+.key.k-lq {transform: translate3d(-16.15vmin, 24.1vmin, 31.5vmin); }
+.key.k-lw {transform: translate3d(-14.65vmin, 24.1vmin, 31.5vmin); }
+.key.k-le {transform: translate3d(-13.15vmin, 24.1vmin, 31.5vmin); }
+.key.k-lr {transform: translate3d(-11.65vmin, 24.1vmin, 31.5vmin); }
+.key.k-lt {transform: translate3d(-10.15vmin, 24.1vmin, 31.5vmin); }
+.key.k-ly {transform: translate3d(-8.65vmin, 24.1vmin, 31.5vmin); }
+.key.k-lu {transform: translate3d(-7.15vmin, 24.1vmin, 31.5vmin); }
+.key.k-li {transform: translate3d(-5.65vmin, 24.1vmin, 31.5vmin); }
+.key.k-lo {transform: translate3d(-4.15vmin, 24.1vmin, 31.5vmin); }
+.key.k-lp {transform: translate3d(-2.65vmin, 24.1vmin, 31.5vmin); }
+.key.k-bkl {transform: translate3d(-1.15vmin, 24.1vmin, 31.5vmin); }
+.key.k-bkr {transform: translate3d(0.35vmin, 24.1vmin, 31.5vmin); }
+.key.k-int {transform: translate3d(2.1vmin, 24.1vmin, 31.5vmin); --width: 1.75; }
+.key.k-cp {transform: translate3d(-17.65vmin, 24.1vmin, 33vmin); --width: 2.65;}
+.key.k-la {transform: translate3d(-15.5vmin, 24.1vmin, 33vmin);}
+.key.k-ls {transform: translate3d(-14.1vmin, 24.1vmin, 33vmin);}
+.key.k-ld {transform: translate3d(-12.65vmin, 24.1vmin, 33vmin);}
+.key.k-lf {transform: translate3d(-11.15vmin, 24.1vmin, 33vmin);}
+.key.k-lg {transform: translate3d(-9.65vmin, 24.1vmin, 33vmin);}
+.key.k-lh {transform: translate3d(-8.15vmin, 24.1vmin, 33vmin);}
+.key.k-lj {transform: translate3d(-6.65vmin, 24.1vmin, 33vmin);}
+.key.k-lk {transform: translate3d(-5.15vmin, 24.1vmin, 33vmin);}
+.key.k-ll {transform: translate3d(-3.65vmin, 24.1vmin, 33vmin);}
+.key.k-lnn {transform: translate3d(-2.15vmin, 24.1vmin, 33vmin);}
+.key.k-brl {transform: translate3d(-0.65vmin, 24.1vmin, 33vmin);}
+.key.k-brr {transform: translate3d(0.85vmin, 24.1vmin, 33vmin);}
+.key.k-intr {transform: translate3d(2.35vmin, 24.1vmin, 33vmin);}
+.key.k-shf {transform: translate3d(-17.3vmin, 24.1vmin, 34.5vmin); --width: 3.3;}
+.key.k-lz {transform: translate3d(-14.75vmin, 24.1vmin, 34.5vmin);}
+.key.k-lx {transform: translate3d(-13.15vmin, 24.1vmin, 34.5vmin);}
+.key.k-lc {transform: translate3d(-11.6vmin, 24.1vmin, 34.5vmin);}
+.key.k-lv {transform: translate3d(-10.15vmin, 24.1vmin, 34.5vmin);}
+.key.k-lb {transform: translate3d(-8.6vmin, 24.1vmin, 34.5vmin);}
+.key.k-ln {transform: translate3d(-7.15vmin, 24.1vmin, 34.5vmin);}
+.key.k-lm {transform: translate3d(-5.65vmin, 24.1vmin, 34.5vmin);}
+.key.k-l-coma {transform: translate3d(-4.15vmin, 24.1vmin, 34.5vmin);}
+.key.k-l-dot {transform: translate3d(-2.65vmin, 24.1vmin, 34.5vmin);}
+.key.k-qst {transform: translate3d(-1.15vmin, 24.1vmin, 34.5vmin);}
+.key.k-shf2 {transform: translate3d(0.65vmin, 24.1vmin, 34.5vmin); --width: 1.75;}
+.key.k-dotcoma {transform: translate3d(2.35vmin, 24.1vmin, 34.5vmin);}
+.key.k-ctrl {transform: translate3d(-18vmin, 24.1vmin, 36vmin); --width: 2;}
+.key.k-altl {transform: translate3d(-14.4vmin, 24.1vmin, 36vmin); --width: 2;}
+.key.k-spac {transform: translate3d(-8.15vmin, 24.1vmin, 36vmin); --width: 10;}
+.key.k-altr {transform: translate3d(-1.85vmin, 24.1vmin, 36vmin); --width: 2;}
+.key.k-ctrr {transform: translate3d(1.85vmin, 24.1vmin, 36vmin); --width: 2;}
+
+
+/* Keyboard Lights */
+.cuboid.keyboard .side:nth-of-type(5):before {
+	content: "NUM CAP SRC";
+	position: absolute;
+	width: 5.9vmin;
+	height: 1.5vmin;
+	top: 1vmin;
+	background: radial-gradient(circle at 23% 35%, green 1px, #fff4 2px, #fff0 3px), radial-gradient(circle at 50% 35%, #183b1a 1px, #fff4 2px, #fff0 3px), radial-gradient(circle at 77% 35%, #183b1a 1px, #fff4 2px, #fff0 3px);
+	right: 1.125vmin;
+	border: 0.2vmin solid #666;
+	box-sizing: border-box;
+	border-color: #777 #999 #999 #777;
+	font-size: 0.25vmin;
+	text-align: center;
+	word-spacing: 1vmin;
+	line-height: 1.9vmin;
+	color: #333;
+}
+
+
+
+
+
+/* Keyboard cable */
+.key + .cable  {
+	transform: rotateX(90deg) translate3d(-44.15vmin, 29vmin, -25.225vmin) rotateZ(90deg);
+	height: 10vmin;
+}
+.key + .cable + .cable {
+	transform: rotateX(90deg) translate3d(-49vmin, 4.4vmin, -25.225vmin) rotateZ(0deg);
+	height: 49.5vmin;
+}
+.key + .cable + .cable + .cable {
+	transform: rotateX(90deg) translate3d(-44vmin, -20vmin, -25.225vmin) rotateZ(90deg);
+	height: 10vmin;
+}
